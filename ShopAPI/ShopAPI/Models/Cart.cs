@@ -7,8 +7,8 @@ namespace ShopAPI.Models
 {
     public class Cart
     {
-        public string Id { get; set; }
-        public List<ProductItem> products { get; set; }
-        public decimal Total { get; set; }
+        public string CartId { get; set; }
+        public List<ProductList> ProductList { get; set; }
+        public decimal CartTotal { get; set; }
     }
 }

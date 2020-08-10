@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ShopAPI.Models
 {
-    public class ProductItem
+    public class ProductList
     {
         public Product product { get; set; }
-        public int Quantity { get; set; }
+        public int ProductQuantity { get; set; }
     }
 }

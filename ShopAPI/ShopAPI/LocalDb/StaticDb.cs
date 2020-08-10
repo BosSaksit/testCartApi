@@ -24,7 +24,7 @@ namespace ShopAPI.LocalDB
         {
             if (carts == null)
             {
-                return new List<Cart> { new Cart { products = new List<ProductItem>() } };
+                return new List<Cart> { new Cart { ProductList = new List<ProductList>() } };
             }
             return carts;
         }

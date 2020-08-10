@@ -29,7 +29,7 @@ namespace ShopAPI.Controllers
         [HttpGet("{id}")]
         public Cart GetCart(string id)
         {
-            return _db.CartController().FirstOrDefault(it => it.Id == id);
+            return _db.CartController().FirstOrDefault(it => it.CartId == id);
         }
 
         [HttpPost]
@@ -37,17 +37,17 @@ namespace ShopAPI.Controllers
         {
             if (cart != null)
             {
-                var totalPrice = cart.products.Select(it => new
+                var totalPrice = cart.ProductList.Select(it => new
                 {
-                    TotalPrice = it.product.Price * it.Quantity
+                    TotalPrice = it.product.ProductPrice * it.ProductQuantity
                 })
                 .Sum(it => it.TotalPrice);
 
                 _db.CartController().Add(new Cart
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    products = cart.products,
-                    Total = totalPrice,
+                    CartId = Guid.NewGuid().ToString(),
+                    ProductList = cart.ProductList,
+                    CartTotal = totalPrice,
                 });
 
             }

@@ -29,32 +29,30 @@ namespace ShopAPI.Controllers
         [HttpGet("{id}")]
         public Product GetProduct(string id)
         {
-            return _db.ProductCollection().FirstOrDefault(it => it.Id == id);
+            return _db.ProductCollection().FirstOrDefault(it => it.ProductId == id);
         }
 
         [HttpPost]
         public void AddProduct([FromBody] Product product)
         {
-            if (product != null)
-            {
-                product.Id = Guid.NewGuid().ToString();
-                _db.ProductCollection().Add(product);
-            }
+
+            product.ProductId = Guid.NewGuid().ToString();
+            _db.ProductCollection().Add(product);
         }
 
         [HttpPut]
         public void EditProduct([FromBody] Product product)
         {
-            var editProduct = _db.ProductCollection().FirstOrDefault(it => it.Id == product.Id);
-            editProduct.Name = product.Name;
-            editProduct.Detail = editProduct.Detail;
-            editProduct.Price = product.Price;
+            var editProduct = _db.ProductCollection().FirstOrDefault(it => it.ProductId == product.ProductId);
+            editProduct.ProductName = product.ProductName;
+            editProduct.ProductDetail = editProduct.ProductDetail;
+            editProduct.ProductPrice = product.ProductPrice;
         }
 
         [HttpDelete]
         public void DeleteProduct(string id)
         {
-            var productDelete = _db.ProductCollection().FirstOrDefault(it => it.Id == id);
+            var productDelete = _db.ProductCollection().FirstOrDefault(it => it.ProductId == id);
             _db.ProductCollection().Remove(productDelete);
 
         }
