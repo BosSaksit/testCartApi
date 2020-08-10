@@ -59,6 +59,12 @@ namespace ShopAPI
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors(builder =>
+             builder.WithOrigins("*")
+             .AllowAnyMethod()
+             .AllowAnyHeader()
+           );
         }
     }
 }

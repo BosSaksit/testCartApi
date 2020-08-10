@@ -11,7 +11,7 @@ namespace ShopAPI.LocalDB
         public static List<Product> products { get; set; }
         public static List<Cart> carts { get; set; }
 
-        public List<Product> Products()
+        public List<Product> GetProductCollection()
         {
             if (products == null)
             {
@@ -20,7 +20,7 @@ namespace ShopAPI.LocalDB
             return products;
         }
 
-        public List<Cart> Carts()
+        public List<Cart> GetCartCollection()
         {
             if (carts == null)
             {
