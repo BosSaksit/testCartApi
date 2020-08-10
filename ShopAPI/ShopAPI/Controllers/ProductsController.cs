@@ -13,47 +13,45 @@ namespace ShopAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private StaticDb _db;
+        public static List<Product> products = new List<Product>{};
 
         public ProductsController()
         {
-            _db = new StaticDb();
         }
 
         [HttpGet]
         public List<Product> GetAllProducts()
         {
-            return _db.ProductCollection();
+            return products;
         }
 
         [HttpGet("{id}")]
         public Product GetProduct(string id)
         {
-            return _db.ProductCollection().FirstOrDefault(it => it.ProductId == id);
+            return products.FirstOrDefault(it => it.ProductId == id);
         }
 
         [HttpPost]
         public void AddProduct([FromBody] Product product)
         {
-
             product.ProductId = Guid.NewGuid().ToString();
-            _db.ProductCollection().Add(product);
+            products.Add(product);
         }
 
         [HttpPut]
         public void EditProduct([FromBody] Product product)
         {
-            var editProduct = _db.ProductCollection().FirstOrDefault(it => it.ProductId == product.ProductId);
+            var editProduct = products.FirstOrDefault(it => it.ProductId == product.ProductId);
             editProduct.ProductName = product.ProductName;
             editProduct.ProductDetail = editProduct.ProductDetail;
             editProduct.ProductPrice = product.ProductPrice;
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public void DeleteProduct(string id)
         {
-            var productDelete = _db.ProductCollection().FirstOrDefault(it => it.ProductId == id);
-            _db.ProductCollection().Remove(productDelete);
+            var productDelete = products.FirstOrDefault(it => it.ProductId == id);
+            products.Remove(productDelete);
 
         }
     }

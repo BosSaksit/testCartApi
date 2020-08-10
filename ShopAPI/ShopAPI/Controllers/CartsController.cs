@@ -13,23 +13,21 @@ namespace ShopAPI.Controllers
     [ApiController]
     public class CartsController : ControllerBase
     {
-        private StaticDb _db;
-
+        public static List<Cart> carts = new List<Cart> { };
         public CartsController()
         {
-            _db = new StaticDb();
         }
 
         [HttpGet]
         public List<Cart> GetAllCarts()
         {
-            return _db.CartController();
+            return carts;
         }
 
         [HttpGet("{id}")]
         public Cart GetCart(string id)
         {
-            return _db.CartController().FirstOrDefault(it => it.CartId == id);
+            return carts.FirstOrDefault(it => it.CartId == id);
         }
 
         [HttpPost]
@@ -43,7 +41,7 @@ namespace ShopAPI.Controllers
                 })
                 .Sum(it => it.TotalPrice);
 
-                _db.CartController().Add(new Cart
+                carts.Add(new Cart
                 {
                     CartId = Guid.NewGuid().ToString(),
                     ProductList = cart.ProductList,
