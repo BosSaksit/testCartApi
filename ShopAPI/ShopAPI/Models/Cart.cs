@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace ShopAPI.Models
 {
-    public class Product
+    public class Cart
     {
         public string Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string Detail { get; set; }
+        public List<ProductItem> products { get; set; }
+        public decimal Total { get; set; }
     }
 }
