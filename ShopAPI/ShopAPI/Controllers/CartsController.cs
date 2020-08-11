@@ -21,7 +21,6 @@ namespace ShopAPI.Controllers
         public List<Cart> GetAllCarts()
         {
             return DataServices.Carts;
-            ;
         }
 
         [HttpGet("{id}")]
