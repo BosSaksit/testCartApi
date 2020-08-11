@@ -44,7 +44,7 @@ namespace ShopAPI.Controllers
         {
             var editProduct = DataServices.Products.FirstOrDefault(it => it.ProductId == product.ProductId);
             editProduct.ProductName = product.ProductName;
-            editProduct.ProductDetail = editProduct.ProductDetail;
+            editProduct.ProductDetail = product.ProductDetail;
             editProduct.ProductPrice = product.ProductPrice;
         }
 
