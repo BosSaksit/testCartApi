@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShopAPI.LocalDB;
 using ShopAPI.Models;
+using ShopAPI.Services;
 
 namespace ShopAPI.Controllers
 {
@@ -13,7 +13,6 @@ namespace ShopAPI.Controllers
     [ApiController]
     public class CartsController : ControllerBase
     {
-        public static List<Cart> carts = new List<Cart> { };
         public CartsController()
         {
         }
@@ -21,13 +20,14 @@ namespace ShopAPI.Controllers
         [HttpGet]
         public List<Cart> GetAllCarts()
         {
-            return carts;
+            return DataServices.Carts;
+            ;
         }
 
         [HttpGet("{id}")]
         public Cart GetCart(string id)
         {
-            return carts.FirstOrDefault(it => it.CartId == id);
+            return DataServices.Carts.FirstOrDefault(it => it.CartId == id);
         }
 
         [HttpPost]
@@ -41,14 +41,20 @@ namespace ShopAPI.Controllers
                 })
                 .Sum(it => it.TotalPrice);
 
-                carts.Add(new Cart
+                DataServices.Carts.Add(new Cart
                 {
                     CartId = Guid.NewGuid().ToString(),
                     ProductList = cart.ProductList,
                     CartTotal = totalPrice,
                 });
-
             }
+        }
+
+        [HttpDelete]
+        public void DeleteCart(string id)
+        {
+            var cartDelete = DataServices.Carts.FirstOrDefault(it => it.CartId == id);
+            DataServices.Carts.Remove(cartDelete);
         }
     }
 }

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShopAPI.LocalDB;
 using ShopAPI.Models;
+using ShopAPI.Services;
 
 namespace ShopAPI.Controllers
 {
@@ -13,8 +13,6 @@ namespace ShopAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        public static List<Product> products = new List<Product>{};
-
         public ProductsController()
         {
         }
@@ -22,26 +20,29 @@ namespace ShopAPI.Controllers
         [HttpGet]
         public List<Product> GetAllProducts()
         {
-            return products;
+            return DataServices.Products;
         }
 
         [HttpGet("{id}")]
         public Product GetProduct(string id)
         {
-            return products.FirstOrDefault(it => it.ProductId == id);
+            return DataServices.Products.FirstOrDefault(it => it.ProductId == id);
         }
 
         [HttpPost]
         public void AddProduct([FromBody] Product product)
         {
-            product.ProductId = Guid.NewGuid().ToString();
-            products.Add(product);
+            if (product != null)
+            {
+                product.ProductId = Guid.NewGuid().ToString();
+                DataServices.Products.Add(product);
+            }
         }
 
         [HttpPut]
         public void EditProduct([FromBody] Product product)
         {
-            var editProduct = products.FirstOrDefault(it => it.ProductId == product.ProductId);
+            var editProduct = DataServices.Products.FirstOrDefault(it => it.ProductId == product.ProductId);
             editProduct.ProductName = product.ProductName;
             editProduct.ProductDetail = editProduct.ProductDetail;
             editProduct.ProductPrice = product.ProductPrice;
@@ -50,9 +51,8 @@ namespace ShopAPI.Controllers
         [HttpDelete("{id}")]
         public void DeleteProduct(string id)
         {
-            var productDelete = products.FirstOrDefault(it => it.ProductId == id);
-            products.Remove(productDelete);
-
+            var productDelete = DataServices.Products.FirstOrDefault(it => it.ProductId == id);
+            DataServices.Products.Remove(productDelete);
         }
     }
 }

@@ -51,6 +51,12 @@ namespace ShopAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
+            app.UseCors(builder =>
+             builder.WithOrigins("*")
+             .AllowAnyMethod()
+             .AllowAnyHeader()
+           );
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -60,11 +66,7 @@ namespace ShopAPI
                 endpoints.MapControllers();
             });
 
-            app.UseCors(builder =>
-             builder.WithOrigins("*")
-             .AllowAnyMethod()
-             .AllowAnyHeader()
-           );
+
         }
     }
 }
