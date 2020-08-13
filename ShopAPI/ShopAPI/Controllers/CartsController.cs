@@ -30,23 +30,35 @@ namespace ShopAPI.Controllers
         }
 
         [HttpPost]
-        public void AddCart([FromBody] Cart cart)
+        public Cart AddCart([FromBody] Cart cart)
         {
-            if (cart != null)
-            {
-                var totalPrice = cart.ProductList.Select(it => new
-                {
-                    TotalPrice = it.product.ProductPrice * it.ProductQuantity
-                })
-                .Sum(it => it.TotalPrice);
+            // if (cart != null)
+            // {
+            //     var totalPrice = cart.ProductList.Select(it => new
+            //     {
+            //         TotalPrice = it.product.ProductPrice * it.ProductQuantity
+            //     })
+            //     .Sum(it => it.TotalPrice);
 
-                DataServices.Carts.Add(new Cart
-                {
-                    CartId = Guid.NewGuid().ToString(),
-                    ProductList = cart.ProductList,
-                    CartTotal = totalPrice,
-                });
-            }
+            //     DataServices.Carts.Add(new Cart
+            //     {
+            //         CartId = Guid.NewGuid().ToString(),
+            //         ProductList = cart.ProductList,
+            //         CartTotal = totalPrice,
+            //     });
+            // }
+
+            var id = Guid.NewGuid().ToString();
+            var item = new Cart
+            {
+                CartId = id.ToString(),
+                ProductList = cart.ProductList,
+                CartTotal = cart.CartTotal
+               
+            };
+            DataServices.Carts.Add(item);
+            return item;
+
         }
 
         [HttpDelete]
